@@ -119,7 +119,7 @@ public class Minesweeper{
             int columnInt = Integer.parseInt(columnString);
             Cell.digCell(row.charAt(0), columnInt);
             printBoard();
-            System.out.println("Digged: "+getCel() + numberOfDiggedCells);
+            
 
             if (numberOfDiggedCells == Cell.map.size() - numberOfBombs){
                 isGameOver = true;
@@ -155,7 +155,6 @@ public class Minesweeper{
                 int x = i % size;
                 x = x == 0 ? 4 : x;
                 char ch = (char) ('A' + (i - x) / size);
-                System.out.print("i" + i + " " +ch + " " + x + "\n");
                 Cell.digCell(ch, x);
                 increaseDiggedCells();
             }

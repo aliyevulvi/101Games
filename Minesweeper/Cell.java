@@ -39,7 +39,6 @@ public class  Cell{
         
 	
 		if (Cell.map.get(i*size+j).getBomb()){
-			System.out.print("Failed");
             Cell.map.get(i*size+j).setCellValue("X");
             Minesweeper.openBoard();
 			return;} 
@@ -84,14 +83,13 @@ public class  Cell{
 			} else {
 				Cell.map.get(i*size+j).setCellValue("" + numberOfBombsAround);
                 Minesweeper.increaseDiggedCells();
-                System.out.println("iceri iki");
+                
         	}
 				
 			
 		}
 
-        System.out.println("DiCell in ici " + Minesweeper.getCel());
-    
+        
 			
 	}
 	
