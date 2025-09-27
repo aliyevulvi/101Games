@@ -5,8 +5,19 @@ public class  Cell{
 	public static HashMap<Integer, Cell> map = new HashMap<>(); 
 	private boolean thereIsBomb = false;
 	private String value;
-	
-	
+	private boolean flagged = false;
+
+	public boolean getFlag(){
+	    return flagged;
+	    }
+	    
+	public void changeFlag(){
+	  	if (flagged)
+	  	    flagged = false;
+	  	else
+	  	    flagged = true;
+	}
+	  	
 	public Cell(String value) {
 		this.value = value;
 	}

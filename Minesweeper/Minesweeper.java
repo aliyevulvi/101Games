@@ -58,6 +58,10 @@ public class Minesweeper{
 			System.out.print(String.valueOf((char) (letter + x)) + "|");
 		
 			for (int j = 1; j <= size; j++){
+				if (Cell.map.get(x*size+j).getFlag()){
+				    System.out.print("F  ");
+				    continue;
+				}
 				System.out.print(Cell.map.get(x*size+j).getValue()+"  ");
 			}
 			System.out.println();
@@ -105,6 +109,15 @@ public class Minesweeper{
         while (!isGameOver) {
             String row = "00";
             String columnString = "A";
+            size = (int) (Math.sqrt(Cell.map.size()));
+            choice = "A";
+           
+            while (!(choice.equals("0") || choice.equals("1"))){
+                System.out.print("Dig Cell (0) or Flag Cell (1): ");
+                choice = input.nextLine();
+            }
+            
+        
             while ((!Character.isLetter(row.charAt(0)) || row.length() != 1) || (row.charAt(0) < 65 || row.charAt(0) >= (65+size))){
                 System.out.print("Enter row:");
                 row = input.nextLine();
@@ -117,6 +130,15 @@ public class Minesweeper{
             }
 
             int columnInt = Integer.parseInt(columnString);
+            
+            if (choice.equals("1")){
+                int x = (int) ( row.charAt(0));
+                x = x - 65;
+                Cell.map.get(x*size + columnInt).changeFlag();
+                printBoard();
+                continue;
+            }
+            
             Cell.digCell(row.charAt(0), columnInt);
             printBoard();
             
