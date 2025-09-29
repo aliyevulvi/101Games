@@ -1,3 +1,5 @@
+package Tetris;
+
 import java.io.IOException;
 public class Tetris {
      public static int[][] block = {{1,1},{1,1}};
@@ -62,7 +64,7 @@ public class Tetris {
 			System.out.print("| ");
 			for (int j = 0; j < 10; j++){
 				if (board[i][j] == 0){
-					System.out.print("• ");
+					System.out.print("- ");
 				} else 
 					System.out.print("# ");
 			}

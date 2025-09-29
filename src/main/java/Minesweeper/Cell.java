@@ -1,3 +1,5 @@
+package Minesweeper;
+
 import java.util.HashMap;
 
 public class  Cell{
