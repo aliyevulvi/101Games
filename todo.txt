@@ -1,0 +1,2 @@
+1. Minesweeper.Add Timer
+2. Tetris. Add Timer with accelerating speed
