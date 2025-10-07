@@ -78,7 +78,7 @@ public class Tetris {
 
 			
 			try {
-				Thread.sleep(400);
+				Thread.sleep(300);
 			} catch (InterruptedException e){
 				e.printStackTrace();
 			}
