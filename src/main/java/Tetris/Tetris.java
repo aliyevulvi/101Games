@@ -68,6 +68,8 @@ public class Tetris {
         return;
     } else if (ch == 'e' || ch == 'q' ){
         rotateBlock(ch);
+    } else if (ch == 'f'){
+        pause();
     }
 }
 		
@@ -104,6 +106,21 @@ public class Tetris {
 	
 
         
+    }
+    
+    private static void pause() throws IOException{
+        while (true){
+            if (System.in.available() > 0){
+                int x = System.in.read();
+                char c = (char) x;
+                
+                
+                System.out.println("You are in pause");
+                
+                if (c == 'f')
+                    break;
+            }
+        }
     }
     
     private static void failureMessage(){

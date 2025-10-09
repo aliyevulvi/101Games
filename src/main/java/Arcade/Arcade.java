@@ -17,6 +17,7 @@ public class Arcade {
 	
 	public static void startGame() throws IOException {
 	    createBoard();
+	    board[3][5] = 3;
 	    
 	    while (!isGameOver){
 	        System.out.print("\033[H\033[2J");
@@ -40,12 +41,48 @@ public class Arcade {
                 int c = System.in.read();
                 char ch = (char) c;
                 
-                if (ch == 'q')
+                if (ch == 'q'){
                     break;
+                } else if (ch == 'a' || ch == 'd'){
+                    move(ch);
+                }
 			}
+			
+			while (System.in.available() > 0) {
+                System.in.read();
+            }
+                
+                
+			
 	    }
 	}
 	
+	private static void move(char ch){
+	    
+	    if (ch == 'a'){
+	        for (int j = 1; j < column; j++){
+	            if (board[x][j] == 1) {
+	                board[x][j] = 0;
+	                board[x][j-1] = 1;
+	                y = j - 1;
+	                break;
+	            }
+	            
+	        }
+	    } else if (ch == 'd') {
+	        for (int j = 0; j < column-1; j++){
+	            if (board[x][j] == 1) {
+	                board[x][j] = 0;
+	                board[x][j+1] = 1;
+	                y = j + 1;
+	                break;
+	            }
+	            
+	        }
+	    }
+	    
+	    
+	}
 	private static void createBoard(){
 	    
 	    for (int i = 0; i < row; i++){
@@ -95,7 +132,7 @@ public class Arcade {
 	    System.out.println();
 	    
 	    for (int i = 0; i< row; i++){
-	        System.out.print("    |");
+	        System.out.print("    | ");
 	        for (int j = 0; j < column; j++){
 	            if (board[i][j] == 0){
 	                System.out.print("- ");
@@ -103,6 +140,8 @@ public class Arcade {
 	                System.out.print("A ");
 	            } else if (board[i][j] == 2){
 	                System.out.print(": ");
+	            } else if (board[i][j] == 3){
+	                System.out.print("X ");
 	            }
 	            
 	        }
