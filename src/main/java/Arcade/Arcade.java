@@ -1,6 +1,7 @@
 package Arcade;
 
 import java.io.IOException;
+import java.time.*;
 
 public class Arcade {
 	private static int row = 20;
@@ -9,7 +10,7 @@ public class Arcade {
 	private static int score = 0;
 	private static int x = 15, y = 5;
 	private static boolean isGameOver = false;
-	private static int fire = 3;
+	private static int fire = 4, second = 1000, level = 1;
 	
 	public static void main(String[] args) throws IOException {
 		startGame();
@@ -17,13 +18,16 @@ public class Arcade {
 	
 	public static void startGame() throws IOException {
 	    createBoard();
-	    board[3][5] = 3;
+		createEnemies(level);
 	    
 	    while (!isGameOver){
+			
+
 	        System.out.print("\033[H\033[2J");
             System.out.flush();
+
             if (fire == 0) {
-                fire = 3;
+                fire = second/250;
                 fire();
             } else 
                 fire--;
@@ -32,7 +36,7 @@ public class Arcade {
 	        printBoard();
 	        
 	        try {
-				Thread.sleep(500);
+				Thread.sleep(100);
 			} catch (InterruptedException e){
 				e.printStackTrace();
 			}
@@ -51,10 +55,45 @@ public class Arcade {
 			while (System.in.available() > 0) {
                 System.in.read();
             }
+			
+			if (level > 3){
+				System.out.println("You Win!");
+				break;
+			} else if (noEnemy()){
+				level++;
+				createEnemies(level);
+			}
                 
                 
 			
 	    }
+	}
+
+	private static void createEnemies(int level){
+		int numberOfEnemies = level*2;
+		int x = 0, y = 0;
+
+		for (int i = 0; i < numberOfEnemies; i++) {
+			x = (int) (Math.random() * 5 + 1);
+			y = (int) (Math.random() * board[0].length);
+
+			if (board[x][y] == 3){
+				i--;
+			} else {
+				board[x][y] = 3;
+			}
+		}
+	}
+
+	private static boolean noEnemy(){
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[0].length; j++) {
+				if (board[i][j] == 3)
+					return false;
+			}
+		}
+
+		return true;
 	}
 	
 	private static void move(char ch){
@@ -127,7 +166,7 @@ public class Arcade {
 	    System.out.println("\n");
 	    System.out.print("     ");
 	    for (int i = 0; i < column; i++){
-	        System.out.print(" X");
+	        System.out.print(" V");
 	    }
 	    System.out.println();
 	    
@@ -147,6 +186,8 @@ public class Arcade {
 	        }
 	        System.out.println("|");
 	    }
+
+		System.out.println("\n[Score: " + score + "]");
 	    
 	    
 	}
