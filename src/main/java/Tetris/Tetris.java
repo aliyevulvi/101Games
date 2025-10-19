@@ -15,9 +15,13 @@ public class Tetris {
      public static int[][] zBlock = {{1,1,3},{3,1,1}};
      public static int[][] tBlock = {{3,1,3},{1,1,1}};
      public static int[][] sBlock = {{3,1,1},{1,1,3}};
-     private static int score = 0;
+     private static int score = 0, speed = 300;
 
 	public static ArrayList<int[][]> blockList = new ArrayList<>();
+	private static ArrayList<int[][]> nextBlocks = new ArrayList<>();
+	
+	private static int maxHeight = 0, totalLength = 0;
+	private static int[][] nextBlocksTable = new int[0][0];
 	
 	private static int row = 25;
 	private static int column = 10;
@@ -37,7 +41,7 @@ public class Tetris {
 		downBlock();
 		downBlock();
 		
-		printBoard();
+		//printBoard();
 		boolean noCollision = false;
 		
 		outer:
@@ -48,9 +52,11 @@ public class Tetris {
 			noCollision = false;
 			putBoard();
 				while (!noCollision){
-			 System.out.print("\033[H\033[2J");
+			
+			System.out.print("\033[H\033[2J");
             System.out.flush();
-			downBlock();
+            
+            downBlock();
 
 			
 
@@ -71,7 +77,8 @@ public class Tetris {
     } else if (ch == 'f'){
         pause();
     }
-}
+    }
+    
 		
 			System.out.print("\033[H\033[2J");
             System.out.flush();
@@ -80,7 +87,7 @@ public class Tetris {
 
 			
 			try {
-				Thread.sleep(300);
+				Thread.sleep(speed);
 			} catch (InterruptedException e){
 				e.printStackTrace();
 			}
@@ -89,6 +96,7 @@ public class Tetris {
 			if (noCollision){
 			    add2Board();
 			    checkRow();
+			    speed--;
 			    
 			}
 			
@@ -98,6 +106,7 @@ public class Tetris {
 			}
 			
 		}
+		
 		}
 	
 		
@@ -110,16 +119,29 @@ public class Tetris {
     
     private static void pause() throws IOException{
         while (true){
+            
+            printBoard();
+            System.out.println();
+            System.out.println("--------------------");
+	        System.out.println("Press \"F\" For Resume");
+	        System.out.println("--------------------");
+	        
             if (System.in.available() > 0){
                 int x = System.in.read();
                 char c = (char) x;
-                
-                
-                System.out.println("You are in pause");
-                
+            
                 if (c == 'f')
                     break;
             }
+            
+            try {
+				Thread.sleep(100);
+			} catch (InterruptedException e){
+				e.printStackTrace();
+			}
+			
+			System.out.print("\033[H\033[2J");
+            System.out.flush();
         }
     }
     
@@ -389,9 +411,63 @@ public class Tetris {
 				} else if (board[i][j] == 2){
 					System.out.print("#" + " ");
 				} else
-					System.out.print("- ");
+					System.out.print("  ");
+				
+				
+			
 			}
-			System.out.println("|");
+			System.out.print("|");
+			
+			if ( i == row - 5){
+				    System.out.print("--");
+				    for (int a = 0; a < nextBlocksTable[0].length; a++){
+				            System.out.print("--");
+				    }
+				    System.out.print("|");
+				}
+		
+			if ( i == row - 4){
+				    System.out.print("  ");
+				    for (int a = 0; a < nextBlocksTable[0].length; a++){
+				        if (nextBlocksTable[0][a] == 1)
+				            System.out.print("# ");
+				        else
+				            System.out.print("  ");
+				    }
+				    System.out.print("|");
+				}
+				
+				if ( i == row - 3){
+				    System.out.print("  ");
+				    for (int a = 0; a < nextBlocksTable[1].length; a++){
+				        if (nextBlocksTable[1][a] == 1)
+				            System.out.print("# ");
+				        else
+				            System.out.print("  ");
+				    }
+				    System.out.print("|");
+				}
+				
+				if ( i == row - 2){
+				    System.out.print("  ");
+				    for (int a = 0; a < nextBlocksTable[2].length; a++){
+				        if (nextBlocksTable[2][a] == 1)
+				            System.out.print("# ");
+				        else
+				            System.out.print("  ");
+				    }
+				    System.out.print("|");
+				}	
+				
+				if ( i == row - 1){
+				    System.out.print("--");
+				    for (int a = 0; a < nextBlocksTable[0].length; a++){
+				            System.out.print("--");
+				    }
+				    System.out.print("|");
+				}
+													
+			System.out.println();
 			
 		}
 		
@@ -402,6 +478,7 @@ public class Tetris {
 		
 		System.out.println("\n");
 		System.out.println("Score: " + score);
+		
 	}
 	
 	
@@ -414,12 +491,61 @@ public class Tetris {
     //  public static int[][] zBlock = {{1,1,3},{3,1,1}};
     //  public static int[][] tBlock = {{3,1,3},{1,1,1}};
     //  public static int[][] sBlock = {{3,1,1},{1,1,3}};
-        	Collections.shuffle(blockList);
-		int[][] block =  blockList.get(0);
+        Collections.shuffle(blockList);
+        
+        if (nextBlocks.size() == 0){
+            nextBlocks.add(blockList.get(0));
+            nextBlocks.add(blockList.get(1));
+            nextBlocks.add(blockList.get(2));
+        }
+            
+		int[][] block =  nextBlocks.get(0);
+		nextBlocks.remove(0); 
+		nextBlocks.trimToSize();
+		nextBlocks.add(blockList.get(0));
+		
 		for (int i = 0; i<block.length; i++){
 			for (int j = 0; j < block[0].length; j++){
 				board[i+1][j+3] = block[i][j];
 			}
+		}
+		
+        totalLength = 0;
+        maxHeight = 0;
+		for (int[][] arr : nextBlocks){
+		    if (arr.length > maxHeight)
+		        maxHeight = arr.length;
+		        
+		    totalLength += arr[0].length;
+		    System.out.println(arr[0].length);
+		}
+		
+		System.out.println("olcu " + nextBlocks.size());
+		nextBlocksTable = new int[3][totalLength + 2];
+		
+		for (int i = 0; i < 3; i++){
+	        for (int j = 0; j < totalLength+2; j++){
+	            nextBlocksTable[i][j] = 0;
+	        }
+	    }
+	
+		int counter = 0;
+		int a = 2, b = 0, temp = 0;;
+		for (int[][] arr : nextBlocks){
+		    for (int i = arr.length - 1; i >= 0; i--){
+		        for (int j = 0; j < arr[0].length; j++){
+		            nextBlocksTable[a][b] = arr[i][j];
+		            System.out.println("a " + a + " b " + b);
+		            b++;
+		        }
+		        a--;
+		        b = temp;
+		    }
+		    a = 2;
+		    temp += arr[0].length + 1;
+		    b = temp;
+		    System.out.println("bir arr getdi");
+		 
 		}
 		
 		
