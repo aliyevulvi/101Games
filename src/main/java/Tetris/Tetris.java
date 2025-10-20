@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.time.LocalTime;
+import java.time.Duration;
 
 
 public class Tetris {
@@ -22,6 +24,7 @@ public class Tetris {
 	
 	private static int maxHeight = 0, totalLength = 0;
 	private static int[][] nextBlocksTable = new int[0][0];
+	private static long minutes = 0, seconds = 0;
 	
 	private static int row = 25;
 	private static int column = 10;
@@ -43,7 +46,7 @@ public class Tetris {
 		
 		//printBoard();
 		boolean noCollision = false;
-		
+	    LocalTime start = LocalTime.now();	
 		outer:
 		while (true){
 	
@@ -105,7 +108,15 @@ public class Tetris {
 			    break outer;
 			}
 			
+			LocalTime end = LocalTime.now();
+		    Duration dur = Duration.between(start,end);
+		    long totalSeconds = dur.getSeconds();
+		    minutes = totalSeconds / 60;
+		    seconds = totalSeconds % 60;
+			
 		}
+		
+		
 		
 		}
 	
@@ -115,6 +126,17 @@ public class Tetris {
 	
 
         
+    }
+    
+    private static int height(){
+        for (int i = 0; i < row; i++){
+            for (int j = 0; j < column; j++){
+                if (board[i][j] == 2)
+                    return 25-i;
+            }
+        }
+        
+        return 0;
     }
     
     private static void pause() throws IOException{
@@ -418,13 +440,67 @@ public class Tetris {
 			}
 			System.out.print("|");
 			
+			if ( i == row - 11){
+				    System.out.print("--");
+				    for (int a = 0; a < nextBlocksTable[0].length; a++){
+				            System.out.print("--");
+				    }
+				    System.out.print("|");
+			}
+			
+			
+			if ( i == row - 10){
+			    String timeStr = "  Timer: " + minutes + ":" + seconds;
+			    System.out.print(timeStr);
+			    int k = 2*nextBlocksTable[0].length - timeStr.length() + 2;
+			    for (int p = 0; p < k; p++)
+			        System.out.print(" ");
+			    System.out.print("|");
+			}
+			
+			if ( i == row - 9){
+				    System.out.print("--");
+				    for (int a = 0; a < nextBlocksTable[0].length; a++){
+				            System.out.print("--");
+				    }
+				    System.out.print("|");
+			}
+			
+			if ( i == row - 8){
+			    String heightStr = "  Height: " + height();
+			    System.out.print(heightStr);
+			    int k = 2*nextBlocksTable[0].length - heightStr.length() + 2;
+			    for (int p = 0; p < k; p++)
+			        System.out.print(" ");
+			    System.out.print("|");
+			}
+			
+			if ( i == row - 7){
+				    System.out.print("--");
+				    for (int a = 0; a < nextBlocksTable[0].length; a++){
+				            System.out.print("--");
+				    }
+				    System.out.print("|");
+			}
+			
+			if ( i == row - 6){
+			    String scoreStr = "  Score: " + score;
+			    System.out.print(scoreStr);
+			    
+			    
+			    int k = 2*nextBlocksTable[0].length - scoreStr.length() + 2;
+			    for (int p = 0; p < k; p++)
+			        System.out.print(" ");
+			    System.out.print("|");
+			}
+			
 			if ( i == row - 5){
 				    System.out.print("--");
 				    for (int a = 0; a < nextBlocksTable[0].length; a++){
 				            System.out.print("--");
 				    }
 				    System.out.print("|");
-				}
+			}
 		
 			if ( i == row - 4){
 				    System.out.print("  ");
@@ -476,8 +552,6 @@ public class Tetris {
 			System.out.print("X ");
 		}
 		
-		System.out.println("\n");
-		System.out.println("Score: " + score);
 		
 	}
 	
