@@ -1,4 +1,1 @@
-1. Minesweeper.Add Timer
-2. Tetris. Add Timer with accelerating speed
-3. Tetris. Add Pause
-4.
+1. 
