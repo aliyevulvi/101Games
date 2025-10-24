@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 import java.io.IOException;
+import Main.*;
 
 public class Minesweeper{
     private static boolean isGameOver = false;
     private static int numberOfDiggedCells = 0;
     private static int numberOfBombs = 0;
+    private static int score = 0, time = 0;
     
 	
 	public static void increaseDiggedCells(){
@@ -100,12 +102,15 @@ public class Minesweeper{
 
         switch (choice){
             case "easy" : size = 4;
+            score += 10;
             break;
 
             case "medium" : size = 6;
+            score += 20;
             break;
 
             case "hard" : size = 8;
+            score += 30;
             break;
 
                 
@@ -158,11 +163,16 @@ public class Minesweeper{
                 System.out.println("----------------------");
                 System.out.println("You Won! Congrulations...");
                 System.out.println("----------------------");
+                
+                System.out.println("[ You Got " + score + " Points ]");
             } else if (numberOfDiggedCells >= Cell.map.size() - numberOfBombs){
                 isGameOver = true;
                 failure();
             }
         }
+        
+        Stat.updateValue("Minesweeper", Controller.getCurrentPlayerId(), score, time);
+    
 
         
     }
@@ -171,6 +181,7 @@ public class Minesweeper{
         System.out.println("----------------------");
         System.out.println("Buum...!You Failed!");
         System.out.println("----------------------");
+        score = 0;
     }
 
     public static void openBoard(){

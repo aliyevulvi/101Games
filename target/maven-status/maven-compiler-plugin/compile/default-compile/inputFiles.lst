@@ -1,4 +1,11 @@
-/storage/emulated/0/DCIM/101games/src/main/java/Arcade/Arcade.java
-/storage/emulated/0/DCIM/101games/src/main/java/Minesweeper/Cell.java
-/storage/emulated/0/DCIM/101games/src/main/java/Minesweeper/Minesweeper.java
-/storage/emulated/0/DCIM/101games/src/main/java/Tetris/Tetris.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Arcade/Arcade.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Main/Controller.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Main/Login.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Main/Notification.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Main/Player.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Main/Stat.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Main/UserInterface.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Minesweeper/Cell.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Minesweeper/Minesweeper.java
+/storage/emulated/0/DCIM/101Games/src/main/java/TestGson.java
+/storage/emulated/0/DCIM/101Games/src/main/java/Tetris/Tetris.java
