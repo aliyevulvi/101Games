@@ -3,6 +3,7 @@ package Arcade;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.Duration;
+import Main.*;
 
 public class Arcade {
 	private static int row = 20;
@@ -19,6 +20,13 @@ public class Arcade {
 	}
 	
 	public static void startGame() throws IOException {
+	    //FORMATTING
+	    score = 0;
+	    x = 15; y = 5;
+	    isGameOver = false;
+	    fire = 4; second = 1000; level = 1; failure = 0; enemyAction = 0;
+	    totalSeconds = 0; minutes = 0; seconds = 0;
+	    
 	    createBoard();
 		createEnemies(level);
 		LocalTime start = LocalTime.now();
@@ -90,14 +98,14 @@ public class Arcade {
 			totalSeconds = dur.getSeconds();
 			minutes = totalSeconds / 60;
 			seconds = totalSeconds % 60;
-			
-                
-               
-               
-               
                 
 			
 	    }
+	        LocalTime end2 = LocalTime.now();
+	        Duration dur2 = Duration.between(start, end2);
+	        int time = (int) dur2.getSeconds();
+	        Stat.updateValue("Arcade", Controller.getCurrentPlayerId(), score, time);
+ 
 	    
 	    
 	}

@@ -73,6 +73,8 @@ public class Login {
     	Player newPlayer = new Player(nickname, email, password);
     	Player.createPlayerData(newPlayer);
     	
+    	Controller.setCurrentPlayerId(newPlayer.getPlayerId());
+    	
     	return true;
 	    
 	}

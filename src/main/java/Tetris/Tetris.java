@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.time.LocalTime;
 import java.time.Duration;
+import Main.*;
 
 
 public class Tetris {
@@ -32,6 +33,14 @@ public class Tetris {
 
 	
     public static void main(String args[]) throws IOException{
+        //FORMATTING
+        score = 0; speed = 300;
+        blockList.clear(); nextBlocks.clear();
+        maxHeight = 0; totalLength = 0;
+        nextBlocksTable = new int[0][0];
+        minutes = 0; seconds = 0;
+        board = new int[row][column];
+		
 		blockList.addAll(Arrays.asList(sqBlock,lBlock,jBLock,iBlock,zBlock, tBlock,sBlock));
 		
 		createBoard();
@@ -119,8 +128,12 @@ public class Tetris {
 		
 		
 		}
-	
 		
+		LocalTime end2 = LocalTime.now();
+		Duration dur2 = Duration.between(start, end2);
+	    int time = (int) dur2.getSeconds();
+	    Stat.updateValue("Tetris", Controller.getCurrentPlayerId(), score, time);
+ 	
 		
 		
 	

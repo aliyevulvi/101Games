@@ -12,9 +12,12 @@ public class Controller {
 	
 	private static void startProgram() throws IOException {
 	    
+	    System.out.print("\033[H\033[2J");
+        System.out.flush();
+        
 	    System.out.println("\nWelcome to 101Games, Please Sign in or Sign Up!\n");
 	    
-	    //UserInterface.LoginInterface();
+	    UserInterface.LoginInterface();
 	    UserInterface.MenuInterface();
 	    
 		

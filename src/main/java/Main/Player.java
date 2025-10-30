@@ -12,8 +12,12 @@ public class Player {
     private int playerId = -1;
     private String playerEmailAddress = "undefined";
     private String playerPassword = "undefined";
+    private ArrayList<Player> friends = new ArrayList<>();
 
     private static ArrayList<Player> players = new ArrayList<>();
+    private static final File projectRoot = new File(System.getProperty("user.dir"));
+    private static final File dataFile = new File(projectRoot, "Data/data.json");
+	
 
     public Player(String nickname, String email, String pass) {
         this.playerNickname = nickname;
@@ -29,6 +33,12 @@ public class Player {
         this.playerId = id;
         this.playerEmailAddress = email;
         this.playerPassword = pass;
+        
+        Stat.createStat(this.playerId);
+    }
+    
+    public ArrayList<Player> getFriends(){
+        return friends;
     }
 
     public static ArrayList<Player> getPlayers() {
@@ -78,8 +88,16 @@ public class Player {
         getPlayersFromJson();
 
         players.add(player);
+        
+        
 
         try {
+            File file = new File(dataFile.getAbsolutePath());
+        
+        if (!file.exists()){
+            file.createNewFile();
+        }
+        
             File projectRoot = new File(System.getProperty("user.dir"));
             File dataFile = new File(projectRoot, "Data/data.json");
             FileWriter writer = new FileWriter(dataFile.getAbsolutePath());
@@ -93,11 +111,42 @@ public class Player {
 
         return true;
     }
+    
+    public static void writePlayersToJson() {
+        Gson gson = new Gson();
+        getPlayersFromJson();
+
+        try {
+            File file = new File(dataFile.getAbsolutePath());
+        
+        if (!file.exists()){
+            file.createNewFile();
+        }
+        
+            File projectRoot = new File(System.getProperty("user.dir"));
+            File dataFile = new File(projectRoot, "Data/data.json");
+            FileWriter writer = new FileWriter(dataFile.getAbsolutePath());
+            gson.toJson(players, writer);
+            writer.close();
+            
+        } catch (IOException e) {
+            System.out.println("File not changed");
+        }
+
+    }
 
     protected static void getPlayersFromJson() {
         Gson gson = new Gson();
+        
+        
 
         try {
+            File file = new File(dataFile.getAbsolutePath());
+        
+        if (!file.exists()){
+            file.createNewFile();
+        }
+        
             File projectRoot = new File(System.getProperty("user.dir"));
             File dataFile = new File(projectRoot, "Data/data.json");
             FileReader reader = new FileReader(dataFile.getAbsolutePath());

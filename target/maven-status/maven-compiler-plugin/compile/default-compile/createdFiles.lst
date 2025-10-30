@@ -1,8 +1,12 @@
-Notification.class
-TestGson.class
+Main/AdminPanel.class
+Main/Notification.class
+Main/Request.class
 Main/Player.class
+Arcade/Arcade.class
 Main/Login.class
-TestGson$Person.class
+Minesweeper/Cell.class
 Main/Stat.class
 Main/UserInterface.class
+Minesweeper/Minesweeper.class
+Tetris/Tetris.class
 Main/Controller.class

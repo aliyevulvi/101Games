@@ -24,6 +24,10 @@ public class Stat {
 	    playerId = id;
 	}
 	
+	public static ArrayList<Stat> getStats(){
+	    return stats;
+	}
+	
 	public HashMap<String, Integer[]> getStatMap(){
 	    return statMap;
 	}
@@ -53,7 +57,6 @@ public class Stat {
 	    try {
 	        if (!file.exists()){
 	        file.createNewFile();
-	        System.out.println("File Created");
 	    }
 	        
 	        FileWriter writer = new FileWriter(dataFile.getAbsolutePath());
@@ -74,7 +77,6 @@ public class Stat {
 	    try {
 	        if (!file.exists()){
 	        file.createNewFile();
-	        System.out.println("File Created");
 	    }
 	        
 	        FileReader reader = new FileReader(dataFile.getAbsolutePath());
@@ -102,7 +104,15 @@ public class Stat {
 	        }
 	    }
 	    
+	    
 	    setStatsToJson();
+	    System.out.println("Stats registered");
+	    
+	    try {
+	        Thread.sleep(2000);
+	    } catch (Exception e){
+	        
+	    }
 	    
 	    
 	}

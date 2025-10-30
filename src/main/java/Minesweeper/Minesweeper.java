@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.io.IOException;
 import Main.*;
+import java.time.LocalTime;
+import java.time.Duration;
 
 public class Minesweeper{
     private static boolean isGameOver = false;
@@ -29,7 +31,7 @@ public class Minesweeper{
 		double numberOfBombsDouble = size*size/10.0;
 		numberOfBombs = (int) Math.round(numberOfBombsDouble);
 		
-		
+		System.out.println(" check13 ");
 		
 		for (int i = 1; i <= size*size; i++) {
 			Cell newCell = new Cell("#");
@@ -86,6 +88,12 @@ public class Minesweeper{
     }
 
     public static void startGame() {
+        LocalTime start = LocalTime.now();
+        numberOfDiggedCells = 0;
+        numberOfBombs = 0;
+        score = 0;
+        time = 0;
+        
         Scanner input = new Scanner(System.in);
         String choice = "";
         int size = 0;
@@ -116,8 +124,8 @@ public class Minesweeper{
                 
         }
 
-        
-
+        System.out.println(Cell.map.size());
+        isGameOver = false;
         createBoard(size);
         printBoard();
         
@@ -143,7 +151,8 @@ public class Minesweeper{
                 System.out.print("Enter column: ");
                 columnString = input.nextLine();
             }
-
+            
+            System.out.println(" check14 ");
             int columnInt = Integer.parseInt(columnString);
             
             if (choice.equals("1")){
@@ -166,13 +175,21 @@ public class Minesweeper{
                 
                 System.out.println("[ You Got " + score + " Points ]");
             } else if (numberOfDiggedCells >= Cell.map.size() - numberOfBombs){
+                System.out.println(numberOfDiggedCells +" "+ Cell.map.size() +" " + numberOfBombs);
                 isGameOver = true;
                 failure();
             }
         }
         
+        
+        LocalTime end = LocalTime.now();
+        Duration dur = Duration.between(start, end);
+        time = (int) dur.getSeconds();
+        
         Stat.updateValue("Minesweeper", Controller.getCurrentPlayerId(), score, time);
-    
+        Notification.sendNot(new Notification(Controller.getCurrentPlayerId(), "Earning Points", ("You Got " + score + " From Minesweeper"), "Minesweeper"));
+        
+        Cell.map.clear();
 
         
     }
